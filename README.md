@@ -1,6 +1,6 @@
 # Todo List experiments
 
-This is a set different versions of todo list applications in React to experiment with different React technologies.
+This is a set of different versions of a todo list application in React to experiment with different React technologies.
 
 ## Why
 
