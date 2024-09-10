@@ -9,3 +9,7 @@ In this version, we convert this app into a Redux-based application (using the "
 2. Connect Components to Redux: Use connect from react-redux to connect components to the Redux store.
 
 3. Replace Context and useReducer: All state management (tasks and filters) will be handled by Redux, and connect will be used to map state and dispatch to props.
+
+With old school redux, we have to use
+
+mapStateToProps and mapDispatchToProps to map state and dispatch to props.
