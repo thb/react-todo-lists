@@ -24,11 +24,11 @@ console.log(sum1)
 Now if we define elsewhere the function that we pass to reduce :
 
 ```
-function acc_reducer(result: number, number: number) {
+function sumAll(result: number, number: number) {
   return result + number
 }
 
-const sum2 = arr.reduce(acc_reducer)
+const sum2 = arr.reduce(sumAll)
 
 console.log(sum2)
 ```
