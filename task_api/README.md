@@ -2,6 +2,28 @@
 
 This is a simple API for CRUD operations for Tasks.
 
+## Dependencies
+
+```bash
+ruby 3.0+ # (I'm using 3.3)
+```
+
+## Install
+
+```bash
+bundle install
+rails db:create
+rails db:migrate
+```
+
+## Run
+
+```bash
+bin/rails server
+```
+
+## Controller
+
 ```ruby
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :update, :destroy]
