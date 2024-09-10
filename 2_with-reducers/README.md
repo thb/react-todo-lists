@@ -11,8 +11,6 @@ A reducer is a function that transforms an array into a single value doing an op
 
 Example : a function that sums up the items of an array.
 
-Just run this in console (you can use npx ts-node):
-
 ```
 const arr = [1, 2, 3, 4, 5];
 
