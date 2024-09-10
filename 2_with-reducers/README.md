@@ -9,7 +9,7 @@ but with the reducer. We don't manipulate state, we just dispatch actions in the
 
 A reducer is a function that transforms an array into a single value doing an operation on each item.
 
-Example : a function that adds all items of an array.
+Example : a function that sums up the items of an array.
 
 Just run this in console (you can use npx ts-node):
 
