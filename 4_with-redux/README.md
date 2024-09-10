@@ -13,3 +13,9 @@ In this version, we convert this app into a Redux-based application (using the "
 With old school redux, we have to use
 
 mapStateToProps and mapDispatchToProps to map state and dispatch to props.
+
+So a component like TaskItem or FilterLinght will have to be connected by its props to the store state and dispatch actionsc :
+
+```jsx
+export default connect(mapStateToProps, mapDispatchToProps)(TaskItem);
+```
