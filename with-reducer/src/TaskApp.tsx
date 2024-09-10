@@ -4,7 +4,8 @@ import { useReducer } from 'react';
 import AddTask from './AddTask';
 import TaskList from './TaskList';
 import { Action, Task } from './types';
-
+import { filterReducer } from './filterReducer';
+import FilterBar from './FilterBar';
 
 let initialTasks: Task[] = [];
 let actions: Action[] = [
@@ -19,10 +20,11 @@ let finalTasks = actions.reduce(tasksReducer, initialTasks);
 let nextId = 4;
 
 export default function TaskApp() {
-  const [tasks, dispatch] = useReducer(tasksReducer, finalTasks);
+  const [tasks, dispatchTask] = useReducer(tasksReducer, finalTasks);
+  const [filter, dispatchFilter] = useReducer(filterReducer, 'all');
 
   function handleAddTask(text: string) {
-    dispatch({
+    dispatchTask({
       type: 'added',
       id: nextId++,
       text: text,
@@ -30,25 +32,43 @@ export default function TaskApp() {
   }
 
   function handleChangeTask(task: Task) {
-    dispatch({
+    dispatchTask({
       type: 'changed',
       task: task,
     });
   }
 
   function handleDeleteTask(taskId: number) {
-    dispatch({
+    dispatchTask({
       type: 'deleted',
       id: taskId,
     });
   }
 
+  function handleFilterChange(filter: 'all' | 'active' | 'done') {
+    dispatchFilter({
+      type: 'setFilter',
+      filter: filter,
+    });
+  }
+
+  const filteredTasks = tasks.filter((t) => {
+    if (filter === 'all') {
+      return true;
+    } else if (filter === 'active') {
+      return !t.done;
+    } else if (filter === 'done') {
+      return t.done;
+    }
+  });
+
   return (
     <div className="max-w-lg mx-auto">
       <h1 className="text-3xl font-bold text-center my-6">Todo List</h1>
+      <FilterBar filter={filter} onFilterChange={handleFilterChange} />
       <AddTask onAddTask={handleAddTask} />
       <TaskList
-        tasks={tasks}
+        tasks={filteredTasks}
         onChangeTask={handleChangeTask}
         onDeleteTask={handleDeleteTask}
       />

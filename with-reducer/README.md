@@ -1,5 +1,8 @@
-The definition og a reducer
+# With Reducer
 
+## The definition of a reducer
+
+Just run this in console (you can use npx ts-node):
 
 const arr = [1, 2, 3, 4, 5];
 
@@ -14,5 +17,9 @@ function acc_reducer(result: number, number: number) {
 const sum2 = arr.reduce(acc_reducer)
 console.log(sum2)
 
-// you can use ts-node to run these snippets in typescript
-// ~ npx ts-node
+function increaseByOne(result: number) {
+  return result + 1
+}
+
+const sum3 = arr.reduce(increaseByOne)
+console.log(sum3)

@@ -4,9 +4,11 @@ import { useState } from 'react';
 import AddTask from './AddTask';
 import TaskList from './TaskList';
 import { Task } from './types';
+import FilterBar from './FilterBar';
 
 export default function TaskApp() {
   const [tasks, setTasks] = useState(initialTasks);
+  const [filter, setFilter] = useState<'all' | 'active' | 'done'>('all');
 
   function handleAddTask(text: string) {
     setTasks([
@@ -35,12 +37,28 @@ export default function TaskApp() {
     setTasks(tasks.filter((t) => t.id !== taskId));
   }
 
+  function handleFilterChange(newFilter: 'all' | 'active' | 'done') {
+    setFilter(newFilter);
+  }
+
+  const filteredTasks = tasks.filter((task) => {
+    if (filter === 'all') {
+      return true;
+    } else if (filter === 'active') {
+      return !task.done;
+    } else if (filter === 'done') {
+      return task.done;
+    }
+    return true;
+  });
+
   return (
     <div className="max-w-lg mx-auto">
       <h1 className="text-3xl font-bold text-center my-6">Todo List</h1>
+      <FilterBar onFilterChange={handleFilterChange} filter={filter} />
       <AddTask onAddTask={handleAddTask} />
       <TaskList
-        tasks={tasks}
+        tasks={filteredTasks}
         onChangeTask={handleChangeTask}
         onDeleteTask={handleDeleteTask}
       />
