@@ -1,11 +1,7 @@
 import { Task, TaskAction } from '../types';
 
 // Define initial state for tasks
-const initialState: Task[] = [
-  { id: 1, text: 'Visit Kafka Museum', done: true },
-  { id: 2, text: 'Watch a puppet show', done: false },
-  { id: 3, text: 'Lennon Wall pic', done: false },
-];
+const initialState: Task[] = [];
 
 // Task reducer with action types
 export default function tasksReducer(state = initialState, action: TaskAction): Task[] {

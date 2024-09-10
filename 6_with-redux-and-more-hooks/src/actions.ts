@@ -1,8 +1,8 @@
 import { Task } from './types';
 
 // Action creators for tasks
-export function addTask(id: number, text: string) {
-  return { type: 'ADDED', id, text };
+export function addTask(id: number, text: string, done: boolean = false) {
+  return { type: 'ADDED', id, text, done };
 }
 
 export function changeTask(task: Task) {
