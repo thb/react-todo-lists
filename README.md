@@ -10,12 +10,22 @@ There are many ways to create React applications nowadays, and it is useful to h
 
 ### Static React apps (without api persistence)
 
-- with useState
-- with useReducer
-- with immer-reducer
-- with old school redux
-- with modern redux
+1. with useState
+2. with useReducer
+3. with useReducer and Context
+4. with old school redux (connect)
+5. with redux hooks (useDispatch and useSelector)
+6. with redux and more hooks (useMemo, useEffect, useCallback)
+7. with modern redux (slices)
+
+todo:
+
 - with zustand
+- with react-query
+
+not to do but can be done:
+
+- with immer-reducer
 
 ### Static React apps with api persistence
 
