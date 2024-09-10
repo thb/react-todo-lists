@@ -16,9 +16,10 @@ const arr = [1, 2, 3, 4, 5];
 
 const sum1 = arr.reduce(
   (result, number) => result + number
-); // 1 + 2 + 3 + 4 + 5
+);
 
 console.log(sum1)
+// 1 + 2 + 3 + 4 + 5 = 15
 ```
 
 Now if we define elsewhere the function that we pass to reduce :
