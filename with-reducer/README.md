@@ -1,4 +1,9 @@
-# With Reducer
+# With useReducer
+
+## About this version
+
+In this version, we do exactly the same app as in previous version "with-state"
+but with the reducer. We don't manipulate state, we just dispatch actions in the reducers (tasksReducer and filterReducer).
 
 ## The definition of a reducer
 
