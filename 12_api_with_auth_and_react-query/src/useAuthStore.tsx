@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 interface AuthStore {
@@ -9,7 +9,7 @@ interface AuthStore {
   setAccessToken: (token: string) => void;
 }
 
-// Explicit type for the persist middleware to handle the AuthStore state
+// Store the authentication state and persist it in localStorage
 export const useAuthStore = create<AuthStore>()(
   persist<AuthStore>(
     (set) => ({
@@ -20,8 +20,19 @@ export const useAuthStore = create<AuthStore>()(
       setAccessToken: (token) => set({ accessToken: token }),
     }),
     {
-      name: 'auth-storage', // Key for localStorage
-      getStorage: () => localStorage, // Optional, default is localStorage
+      name: 'auth-storage', // Store name for localStorage
+      storage: {
+        getItem: (key) => {
+          const storedValue = localStorage.getItem(key);
+          return storedValue ? JSON.parse(storedValue) : null; // Parse the JSON value
+        },
+        setItem: (key, value) => {
+          localStorage.setItem(key, JSON.stringify(value)); // Stringify the value before setting
+        },
+        removeItem: (key) => {
+          localStorage.removeItem(key);
+        },
+      },
     }
   )
 );

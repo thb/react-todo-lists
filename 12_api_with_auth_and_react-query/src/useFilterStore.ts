@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand'; // Use named import
 
 interface FilterStore {
   filter: 'all' | 'active' | 'done';
@@ -10,3 +10,4 @@ export const useFilterStore = create<FilterStore>((set) => ({
   filter: 'all', // Initial state
   setFilter: (filter) => set({ filter }), // Action to set the filter
 }));
+
