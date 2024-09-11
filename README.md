@@ -2,6 +2,8 @@
 
 This is a set of different versions of the very same todo list application in React to experiment with different React architectures and technologies.
 
+![image](https://github.com/user-attachments/assets/250b5c8a-558a-4082-a795-6f8dfa259aab)
+
 ## Why
 
 There are many ways to create React applications nowadays, and it is useful to have a look at different versions of the same app using different hooks, frameworks, libs, etc.
