@@ -13,6 +13,7 @@ export async function apiClient(endpoint: string, method = 'GET', data?: any) {
   };
 
   const response = await fetch(url, options);
+
   if (!response.ok) {
     throw new Error('API request failed');
   }
