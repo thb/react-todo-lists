@@ -13,6 +13,9 @@ These version are either :
 - API (connected to an API)
 - API + auth (connected to an API and with authentication)
 
+(API) versions are using the API located in `task_api`folter.
+(API + auth) verssions are using the API located in `task_api_with_auth`folter.
+
 ## Versions
 
 done :
@@ -39,3 +42,31 @@ todo:
 - with tanstack router
 - with old school redux + thunk (manual thunks)
 - with Remix
+
+## About the API
+
+`task_api`and `task_api_with_auth` are developped in Ruby on Rails in 5 minutes for the first one and add 10 minutes for the second one.
+
+They provide a simple CRUD interface for tasks :
+
+```
+GET /tasks
+POST /tasks
+PATCH /tasks/:id
+DELETE /tasks/:id
+```
+
+The version with autentication provide a kind of oauth authentication with an access token and a refresh token. The routes are :
+
+```
+POST /auth_tokens           # login with email and password
+POST /auth_tokens/refresh   # refresh the access token
+DELETE /auth_tokens         # logout
+``
+
+The strategy for the client app is to have an apiClient with 2 interceptors to manage the access token and refresh token.
+
+- adds a Bearer token to the Authorization header
+
+- if the request is rejected and we have a refresh token, we try to refresh the access token and retry the request
+
