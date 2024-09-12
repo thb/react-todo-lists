@@ -8,42 +8,34 @@ This is a set of different versions of the very same todo list application in Re
 
 There are many ways to create React applications nowadays, and it is useful to have a look at different versions of the same app using different hooks, frameworks, libs, etc.
 
+These version are either :
+- static (client only)
+- API (connected to an API)
+- API + auth (connected to an API and with authentication)
+
 ## Versions
 
-### Static React apps (without api persistence)
+done :
 
-1. with useState
-2. with useReducer
-3. with useReducer and Context
-4. with old school redux (connect)
-5. with redux hooks (useDispatch and useSelector)
-6. with redux and more hooks (useMemo, useEffect, useCallback)
-7. with modern redux (slices)
+01. with useState
+02. with useReducer
+03. with useReducer and Context
+04. with old school redux (connect state to props and dispatch to props)
+05. with redux hooks (useDispatch and useSelector)
+06. with redux and more hooks (useMemo, useEffect, useCallback)
+07. with modern redux (slices)
+08. with zustand
+09. (API) with modern redux and async thunks
+10. (API) with rtk-query
+11. (API) with react-query
+12. (API + auth) with react-query and zustand
+
+doing:
+
+13. (API + auth) with nextjs (and server actions)
 
 todo:
 
-- with zustand
-- with react-query
-
-not to do but can be done:
-
-- with immer-reducer
-
-### Static React apps with api persistence
-
-- with redux + thunk oldschool
-- with rtk
-- with zustand
-- with react-query
-- with rtk query (pour le store + connection API)
-- with nextjs + server actions
-
-### Static React apps with api persistance and authentication
-
-- with zustand (et un useAuth et useTasks)
-- with react query
-- with nextjs + server actions
-- with nextjs + zustand + server actions
-
-
-
+- with tanstack router
+- with old school redux + thunk (manual thunks)
+- with Remix
