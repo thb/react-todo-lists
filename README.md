@@ -62,11 +62,10 @@ The version with autentication provide a kind of oauth authentication with an ac
 POST /auth_tokens           # login with email and password
 POST /auth_tokens/refresh   # refresh the access token
 DELETE /auth_tokens         # logout
-``
+```
 
 The strategy for the client app is to have an apiClient with 2 interceptors to manage the access token and refresh token.
 
 - adds a Bearer token to the Authorization header
 
 - if the request is rejected and we have a refresh token, we try to refresh the access token and retry the request
-
