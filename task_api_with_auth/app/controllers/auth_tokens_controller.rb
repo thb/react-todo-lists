@@ -15,10 +15,14 @@ class AuthTokensController < ApplicationController
         refresh_token_expires_at: refresh_token_data[:expires_at]
       )
 
+      # Set tokens in HTTP-only cookies
+      set_auth_cookies(auth_token)
+
       render json: {
         access_token: auth_token.access_token,
+        access_token_expires_at: access_token_data[:expires_at],
         refresh_token: auth_token.refresh_token,
-        access_token_expires_at: access_token_data[:expires_at]
+        refresh_token_expires_at: refresh_token_data[:expires_at]
       }, status: :created
     else
       render json: { error: 'Invalid email or password' }, status: :unauthorized
@@ -36,6 +40,9 @@ class AuthTokensController < ApplicationController
         access_token_expires_at: access_token_data[:expires_at]
       )
 
+      # Set new access token in HTTP-only cookie
+      set_auth_cookies(auth_token)
+
       render json: {
         access_token: auth_token.access_token,
         access_token_expires_at: access_token_data[:expires_at]
@@ -43,5 +50,24 @@ class AuthTokensController < ApplicationController
     else
       render json: { error: 'Invalid or expired refresh token' }, status: :unauthorized
     end
+  end
+
+  private
+
+  def set_auth_cookies(auth_token)
+    # Set the access and refresh tokens as HTTP-only cookies
+    cookies['accessToken'] = {
+      value: auth_token.access_token,
+      expires: auth_token.access_token_expires_at,
+      http_only: true,
+      secure: Rails.env.production? # Use secure cookies in production
+    }
+
+    cookies['refreshToken'] = {
+      value: auth_token.refresh_token,
+      expires: auth_token.refresh_token_expires_at,
+      http_only: true,
+      secure: Rails.env.production? # Use secure cookies in production
+    }
   end
 end
