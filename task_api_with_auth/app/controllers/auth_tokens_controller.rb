@@ -45,7 +45,9 @@ class AuthTokensController < ApplicationController
 
       render json: {
         access_token: auth_token.access_token,
-        access_token_expires_at: access_token_data[:expires_at]
+        access_token_expires_at: access_token_data[:expires_at],
+        refresh_token: auth_token.refresh_token,
+        refresh_token_expires_at: auth_token.refresh_token_expires_at
       }, status: :ok
     else
       render json: { error: 'Invalid or expired refresh token' }, status: :unauthorized
