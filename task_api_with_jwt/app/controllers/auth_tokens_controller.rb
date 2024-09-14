@@ -6,7 +6,7 @@ class AuthTokensController < ApplicationController
     user = User.find_by(email: params[:email])
 
     if user&.authenticate(params[:password])
-      access_token = generate_jwt(user.id)
+      access_token = generate_jwt(user)
 
       render json: {
         access_token: access_token
@@ -18,8 +18,18 @@ class AuthTokensController < ApplicationController
 
   private
 
-  def generate_jwt(user_id)
-    payload = { user_id: user_id, exp: 24.hours.from_now.to_i } # Expiration dans 24h
-    JWT.encode(payload, Rails.application.secrets.secret_key_base)
+  def generate_jwt(user)
+    payload = {
+      user: {
+        id: user.id,
+        email: user.email
+      },
+      exp: 24.hours.from_now.to_i
+    } # Expiration dans 24h
+    puts 'secret key base : ' + Rails.application.secret_key_base
+    puts 'payload : ' + payload.to_s
+    jwt = JWT.encode(payload, Rails.application.secret_key_base, 'HS256')
+    puts 'encoded json : ' + jwt
+    jwt
   end
 end

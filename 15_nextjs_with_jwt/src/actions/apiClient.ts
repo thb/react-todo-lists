@@ -8,16 +8,16 @@ const API_URL = 'http://localhost:3001';
 export async function apiClient(endpoint: string, method = 'GET', data?: any) {
   const url = `${API_URL}${endpoint}`;
 
-  // Retrieve the tokens from the session
-  let { accessToken } = await getSession();
+  const session = await getSession();
 
-  if (!accessToken) {
-    throw new Error('Access token not found. Please log in.');
+  // Vérifier si la session est valide
+  if (!session) {
+    redirect('/login');
   }
 
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${accessToken}`,
+    Authorization: `Bearer ${session.token}`,
   };
 
   const options: RequestInit = {
@@ -32,7 +32,7 @@ export async function apiClient(endpoint: string, method = 'GET', data?: any) {
 
   // If 401 Unauthorized, try to refresh tokens by calling the refresh API route
   if (response.status === 401) {
-    redirect('/auth/refresh');
+    redirect('/login');
   }
 
   // Handle non-successful responses

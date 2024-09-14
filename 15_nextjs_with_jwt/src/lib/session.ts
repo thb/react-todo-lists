@@ -1,36 +1,48 @@
-'use server'
+// src/lib/session.ts
+import { cookies } from 'next/headers';
+import { jwtVerify } from 'jose'; // For signing and verifying JWT
 
-import 'server-only'
-import { cookies } from 'next/headers'
-import { NextRequest, NextResponse } from 'next/server';
-
-export async function createSession(accessToken: string, refreshToken: string) {
-  cookies().set('accessToken', accessToken, { httpOnly: true, secure: true, path: '/' });
-  cookies().set('refreshToken', refreshToken, { httpOnly: true, secure: true, path: '/' });
+const secretKey = process.env.SESSION_SECRET;
+if (!secretKey) {
+  throw new Error('SESSION_SECRET is not defined');
 }
 
-export async function deleteSession() {
-  cookies().set('accessToken', '', { maxAge: -1 });
-  cookies().set('refreshToken', '', { maxAge: -1 });
+const encodedKey = new TextEncoder().encode(secretKey);
+
+export async function decrypt(token: string | undefined) {
+  if (!token) return null;
+
+  try {
+
+    const { payload } = await jwtVerify(token, encodedKey, {
+      algorithms: ['HS256'],
+    });
+    return payload;
+  } catch (error) {
+    console.error('Failed to verify session:', error);
+    return null;
+  }
+}
+
+export async function setSession(token: string) {
+  cookies().set('token', token, {
+    httpOnly: true,
+    sameSite: 'strict',
+    path: '/',
+  });
 }
 
 export async function getSession() {
-  const accessToken = cookies().get('accessToken')?.value;
-  const refreshToken = cookies().get('refreshToken')?.value;
-  return { accessToken, refreshToken };
-}
+  const token = cookies().get('token')?.value;
 
-export async function updateSession(request: NextRequest) {
-  const accessToken = request.cookies.get('accessToken')?.value;
-  const refreshToken = request.cookies.get('refreshToken')?.value;
-
-  if (!accessToken || !refreshToken) {
-    return { accessToken: null, refreshToken: null };
+  if (!token) {
+    return null;
   }
 
-  const res = NextResponse.next();
+  const payload = await decrypt(token);
+  return { ...payload, token };
+}
 
-  res.cookies.set('accessToken', accessToken, { httpOnly: true, secure: true, path: '/' });
-  res.cookies.set('refreshToken', refreshToken, { httpOnly: true, secure: true, path: '/' });
-  return res;
+export async function deleteSession() {
+  cookies().delete('token');
 }

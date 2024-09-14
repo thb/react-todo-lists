@@ -28,8 +28,8 @@ module TaskApi
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
-
-    config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore, key: '_api_session'
+    config.before_initialize do
+      config.secret_key_base = Rails.application.credentials.secret_key_base || ENV['SECRET_KEY_BASE']
+    end
   end
 end
