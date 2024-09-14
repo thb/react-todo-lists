@@ -32,16 +32,18 @@ done :
 10. (API) with rtk-query
 11. (API) with react-query
 12. (API + auth) with react-query and zustand
+13. (API) with NextJS
+14. (API + auth) with NextJS and auth tokens
+15. (API + auth) with NextJS and JWT
 
 doing:
 
-13. (API + auth) with nextjs (and server actions)
 
 todo:
 
 - with tanstack router
 - with old school redux + thunk (manual thunks)
-- with Remix
+- with NextJS + AuthJS
 
 ## About the API
 
