@@ -35,13 +35,12 @@ done :
 13. (API) with NextJS
 14. (API + auth) with NextJS and auth tokens
 15. (API + auth) with NextJS and JWT
+16. with tanstack router
 
 doing:
 
-
 todo:
 
-- with tanstack router
 - with old school redux + thunk (manual thunks)
 - with NextJS + AuthJS
 
