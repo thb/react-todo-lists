@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   # auth  
   post '/auth_tokens', to: 'auth_tokens#create'         # Login route
   post '/auth_tokens/refresh', to: 'auth_tokens#refresh' # Refresh token route
-
+  delete '/auth_tokens', to: 'auth_tokens#destroy'       # Logout route
   
   resources :tasks
 

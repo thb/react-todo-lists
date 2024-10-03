@@ -54,6 +54,13 @@ class AuthTokensController < ApplicationController
     end
   end
 
+  def destroy
+    auth_token = AuthToken.find_by(refresh_token: params[:refresh_token])
+    auth_token.destroy if auth_token
+    render json: {}, status: :no_content
+  end
+
+
   private
 
   def set_auth_cookies(auth_token)
