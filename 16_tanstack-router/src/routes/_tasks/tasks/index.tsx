@@ -1,28 +1,27 @@
 import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router'
 
-import AddTask from '@/components/AddTask';
-import TaskList from '@/components/TaskList';
-import FilterBar from '@/components/FilterBar';
-import { QueryClientProvider } from '@tanstack/react-query';
-import { queryClient } from '@/queryClient';
-import { useAuthStore } from '@/stores/authStore';
-import { useEffect } from 'react';
+import AddTask from '@/components/AddTask'
+import TaskList from '@/components/TaskList'
+import FilterBar from '@/components/FilterBar'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from '@/queryClient'
+import { useAuthStore } from '@/stores/authStore'
+import { useEffect } from 'react'
 
-export const Route = createFileRoute('/tasks/')({
+export const Route = createFileRoute('/_tasks/tasks/')({
   component: () => <TaskApp />,
 })
 
 export default function TaskApp() {
-
-  const navigate = useNavigate();
-  const { isAuthenticated } = useAuthStore();
+  const navigate = useNavigate()
+  const { isAuthenticated } = useAuthStore()
 
   // Check authentication and redirect if necessary
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate({ to: '/login' });
+      navigate({ to: '/login' })
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate])
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -33,5 +32,5 @@ export default function TaskApp() {
         <TaskList />
       </div>
     </QueryClientProvider>
-  );
+  )
 }

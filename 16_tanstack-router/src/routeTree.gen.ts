@@ -13,8 +13,15 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as TasksIndexImport } from './routes/tasks/index'
+import { Route as TasksImport } from './routes/_tasks'
+import { Route as LayoutImport } from './routes/_layout'
 import { Route as LoginIndexImport } from './routes/login/index'
+import { Route as TasksTestImport } from './routes/_tasks/test'
+import { Route as LayoutLayoutXImport } from './routes/_layout/layout-x'
+import { Route as LayoutLayout2Import } from './routes/_layout/_layout-2'
+import { Route as TasksTasksIndexImport } from './routes/_tasks/tasks/index'
+import { Route as LayoutLayout2LayoutBImport } from './routes/_layout/_layout-2/layout-b'
+import { Route as LayoutLayout2LayoutAImport } from './routes/_layout/_layout-2/layout-a'
 
 // Create Virtual Routes
 
@@ -28,19 +35,54 @@ const AboutLazyRoute = AboutLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
 
+const TasksRoute = TasksImport.update({
+  id: '/_tasks',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LayoutRoute = LayoutImport.update({
+  id: '/_layout',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
-const TasksIndexRoute = TasksIndexImport.update({
-  path: '/tasks/',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const LoginIndexRoute = LoginIndexImport.update({
   path: '/login/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const TasksTestRoute = TasksTestImport.update({
+  path: '/test',
+  getParentRoute: () => TasksRoute,
+} as any)
+
+const LayoutLayoutXRoute = LayoutLayoutXImport.update({
+  path: '/layout-x',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutLayout2Route = LayoutLayout2Import.update({
+  id: '/_layout-2',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const TasksTasksIndexRoute = TasksTasksIndexImport.update({
+  path: '/tasks/',
+  getParentRoute: () => TasksRoute,
+} as any)
+
+const LayoutLayout2LayoutBRoute = LayoutLayout2LayoutBImport.update({
+  path: '/layout-b',
+  getParentRoute: () => LayoutLayout2Route,
+} as any)
+
+const LayoutLayout2LayoutARoute = LayoutLayout2LayoutAImport.update({
+  path: '/layout-a',
+  getParentRoute: () => LayoutLayout2Route,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -54,12 +96,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/_layout': {
+      id: '/_layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof LayoutImport
+      parentRoute: typeof rootRoute
+    }
+    '/_tasks': {
+      id: '/_tasks'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof TasksImport
+      parentRoute: typeof rootRoute
+    }
     '/about': {
       id: '/about'
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutLazyImport
       parentRoute: typeof rootRoute
+    }
+    '/_layout/_layout-2': {
+      id: '/_layout/_layout-2'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof LayoutLayout2Import
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/layout-x': {
+      id: '/_layout/layout-x'
+      path: '/layout-x'
+      fullPath: '/layout-x'
+      preLoaderRoute: typeof LayoutLayoutXImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_tasks/test': {
+      id: '/_tasks/test'
+      path: '/test'
+      fullPath: '/test'
+      preLoaderRoute: typeof TasksTestImport
+      parentRoute: typeof TasksImport
     }
     '/login/': {
       id: '/login/'
@@ -68,61 +145,163 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginIndexImport
       parentRoute: typeof rootRoute
     }
-    '/tasks/': {
-      id: '/tasks/'
+    '/_layout/_layout-2/layout-a': {
+      id: '/_layout/_layout-2/layout-a'
+      path: '/layout-a'
+      fullPath: '/layout-a'
+      preLoaderRoute: typeof LayoutLayout2LayoutAImport
+      parentRoute: typeof LayoutLayout2Import
+    }
+    '/_layout/_layout-2/layout-b': {
+      id: '/_layout/_layout-2/layout-b'
+      path: '/layout-b'
+      fullPath: '/layout-b'
+      preLoaderRoute: typeof LayoutLayout2LayoutBImport
+      parentRoute: typeof LayoutLayout2Import
+    }
+    '/_tasks/tasks/': {
+      id: '/_tasks/tasks/'
       path: '/tasks'
       fullPath: '/tasks'
-      preLoaderRoute: typeof TasksIndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof TasksTasksIndexImport
+      parentRoute: typeof TasksImport
     }
   }
 }
 
 // Create and export the route tree
 
+interface LayoutLayout2RouteChildren {
+  LayoutLayout2LayoutARoute: typeof LayoutLayout2LayoutARoute
+  LayoutLayout2LayoutBRoute: typeof LayoutLayout2LayoutBRoute
+}
+
+const LayoutLayout2RouteChildren: LayoutLayout2RouteChildren = {
+  LayoutLayout2LayoutARoute: LayoutLayout2LayoutARoute,
+  LayoutLayout2LayoutBRoute: LayoutLayout2LayoutBRoute,
+}
+
+const LayoutLayout2RouteWithChildren = LayoutLayout2Route._addFileChildren(
+  LayoutLayout2RouteChildren,
+)
+
+interface LayoutRouteChildren {
+  LayoutLayout2Route: typeof LayoutLayout2RouteWithChildren
+  LayoutLayoutXRoute: typeof LayoutLayoutXRoute
+}
+
+const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutLayout2Route: LayoutLayout2RouteWithChildren,
+  LayoutLayoutXRoute: LayoutLayoutXRoute,
+}
+
+const LayoutRouteWithChildren =
+  LayoutRoute._addFileChildren(LayoutRouteChildren)
+
+interface TasksRouteChildren {
+  TasksTestRoute: typeof TasksTestRoute
+  TasksTasksIndexRoute: typeof TasksTasksIndexRoute
+}
+
+const TasksRouteChildren: TasksRouteChildren = {
+  TasksTestRoute: TasksTestRoute,
+  TasksTasksIndexRoute: TasksTasksIndexRoute,
+}
+
+const TasksRouteWithChildren = TasksRoute._addFileChildren(TasksRouteChildren)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
+  '': typeof LayoutLayout2RouteWithChildren
   '/about': typeof AboutLazyRoute
+  '/layout-x': typeof LayoutLayoutXRoute
+  '/test': typeof TasksTestRoute
   '/login': typeof LoginIndexRoute
-  '/tasks': typeof TasksIndexRoute
+  '/layout-a': typeof LayoutLayout2LayoutARoute
+  '/layout-b': typeof LayoutLayout2LayoutBRoute
+  '/tasks': typeof TasksTasksIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
+  '': typeof LayoutLayout2RouteWithChildren
   '/about': typeof AboutLazyRoute
+  '/layout-x': typeof LayoutLayoutXRoute
+  '/test': typeof TasksTestRoute
   '/login': typeof LoginIndexRoute
-  '/tasks': typeof TasksIndexRoute
+  '/layout-a': typeof LayoutLayout2LayoutARoute
+  '/layout-b': typeof LayoutLayout2LayoutBRoute
+  '/tasks': typeof TasksTasksIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
+  '/_layout': typeof LayoutRouteWithChildren
+  '/_tasks': typeof TasksRouteWithChildren
   '/about': typeof AboutLazyRoute
+  '/_layout/_layout-2': typeof LayoutLayout2RouteWithChildren
+  '/_layout/layout-x': typeof LayoutLayoutXRoute
+  '/_tasks/test': typeof TasksTestRoute
   '/login/': typeof LoginIndexRoute
-  '/tasks/': typeof TasksIndexRoute
+  '/_layout/_layout-2/layout-a': typeof LayoutLayout2LayoutARoute
+  '/_layout/_layout-2/layout-b': typeof LayoutLayout2LayoutBRoute
+  '/_tasks/tasks/': typeof TasksTasksIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/login' | '/tasks'
+  fullPaths:
+    | '/'
+    | ''
+    | '/about'
+    | '/layout-x'
+    | '/test'
+    | '/login'
+    | '/layout-a'
+    | '/layout-b'
+    | '/tasks'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/login' | '/tasks'
-  id: '__root__' | '/' | '/about' | '/login/' | '/tasks/'
+  to:
+    | '/'
+    | ''
+    | '/about'
+    | '/layout-x'
+    | '/test'
+    | '/login'
+    | '/layout-a'
+    | '/layout-b'
+    | '/tasks'
+  id:
+    | '__root__'
+    | '/'
+    | '/_layout'
+    | '/_tasks'
+    | '/about'
+    | '/_layout/_layout-2'
+    | '/_layout/layout-x'
+    | '/_tasks/test'
+    | '/login/'
+    | '/_layout/_layout-2/layout-a'
+    | '/_layout/_layout-2/layout-b'
+    | '/_tasks/tasks/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
+  LayoutRoute: typeof LayoutRouteWithChildren
+  TasksRoute: typeof TasksRouteWithChildren
   AboutLazyRoute: typeof AboutLazyRoute
   LoginIndexRoute: typeof LoginIndexRoute
-  TasksIndexRoute: typeof TasksIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
+  LayoutRoute: LayoutRouteWithChildren,
+  TasksRoute: TasksRouteWithChildren,
   AboutLazyRoute: AboutLazyRoute,
   LoginIndexRoute: LoginIndexRoute,
-  TasksIndexRoute: TasksIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -138,22 +317,62 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/_layout",
+        "/_tasks",
         "/about",
-        "/login/",
-        "/tasks/"
+        "/login/"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
     },
+    "/_layout": {
+      "filePath": "_layout.tsx",
+      "children": [
+        "/_layout/_layout-2",
+        "/_layout/layout-x"
+      ]
+    },
+    "/_tasks": {
+      "filePath": "_tasks.tsx",
+      "children": [
+        "/_tasks/test",
+        "/_tasks/tasks/"
+      ]
+    },
     "/about": {
       "filePath": "about.lazy.tsx"
+    },
+    "/_layout/_layout-2": {
+      "filePath": "_layout/_layout-2.tsx",
+      "parent": "/_layout",
+      "children": [
+        "/_layout/_layout-2/layout-a",
+        "/_layout/_layout-2/layout-b"
+      ]
+    },
+    "/_layout/layout-x": {
+      "filePath": "_layout/layout-x.tsx",
+      "parent": "/_layout"
+    },
+    "/_tasks/test": {
+      "filePath": "_tasks/test.tsx",
+      "parent": "/_tasks"
     },
     "/login/": {
       "filePath": "login/index.tsx"
     },
-    "/tasks/": {
-      "filePath": "tasks/index.tsx"
+    "/_layout/_layout-2/layout-a": {
+      "filePath": "_layout/_layout-2/layout-a.tsx",
+      "parent": "/_layout/_layout-2"
+    },
+    "/_layout/_layout-2/layout-b": {
+      "filePath": "_layout/_layout-2/layout-b.tsx",
+      "parent": "/_layout/_layout-2"
+    },
+    "/_tasks/tasks/": {
+      "filePath": "_tasks/tasks/index.tsx",
+      "parent": "/_tasks"
     }
   }
 }
