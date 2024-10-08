@@ -13,6 +13,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.55.4",
     "@tanstack/react-router": "^1.58.17",
+    "@tanstack/react-router-with-query": "^1.63.2",
     "@tanstack/router-plugin": "^1.58.12",
     "@types/jest": "^29.5.12",
     "axios": "^1.7.7",
