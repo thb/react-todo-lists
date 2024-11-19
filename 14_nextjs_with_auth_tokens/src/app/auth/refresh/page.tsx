@@ -1,5 +1,5 @@
 
-import { logout, refreshSession } from '@/actions/authActions';
+import { logout, refresh } from '@/actions/authActions';
 
 export default async function RefreshSessionPage() {
 
@@ -9,7 +9,7 @@ export default async function RefreshSessionPage() {
       <p className="mb-8">Please confirm to refresh your session or logout.</p>
 
       {/* Refresh token form */}
-      <form id="refresh-form" action={refreshSession} method="POST">
+      <form id="refresh-form" action={refresh} method="POST">
         <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
           Refresh Session
         </button>

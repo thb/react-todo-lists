@@ -44,7 +44,7 @@ export async function login(prevState: MyFormState, formData: FormData) {
   };
 }
 
-export async function refreshSession() {
+export async function refresh() {
   const { refreshToken } = await getSession();
 
   if (!refreshToken) {
