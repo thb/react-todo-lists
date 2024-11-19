@@ -5,8 +5,6 @@ import { getSession } from '@/lib/session';
 export default async function TaskList({ filter }: { filter: 'all' | 'active' | 'done' }) {
   const tasks = await fetchTasks(filter); // Pass filter to fetch tasks accordingly
 
-  const session = await getSession() as any;
-
   if (!tasks || tasks.length === 0) {
     return <p>No tasks found.</p>;
   }
@@ -25,7 +23,6 @@ export default async function TaskList({ filter }: { filter: 'all' | 'active' | 
   return (
     <>
       <h4>User info</h4>
-      <pre>{session && JSON.stringify(session.user)}</pre>
       <ul>
         {filteredTasks.map((task) => (
           <TaskItem key={task.id} task={task} />
